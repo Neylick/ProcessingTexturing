@@ -2,17 +2,16 @@ import peasy.*;
 
 PeasyCam cam;
 
-PShape test_shape;
-PImage dispmap_img, texture_img, p;
+PShape shape;
 boolean istyping = false;
+final int TGT_RESOLUTION = 1024;
 
-final int MAX_RESOLUTION = 512;
-
-String res_type = "cobble"; 
+String res_type = "wall"; 
 
 
 void setup() 
 {
+	PImage dispmap_img, texture_img, p;
 	cam = new PeasyCam(this, 1500);
 	size(900,900, P3D);
 
@@ -22,14 +21,17 @@ void setup()
 
 	if(dispmap_img.width != dispmap_img.height) System.exit(1);
 
-	test_shape = shapeFromDispMap(texture_img, dispmap_img);
-	// saveShapeDispMap(test_shape, "testdisp.jpg", dispmap_img.width);
+	shape = shapeFromDispMap(texture_img, dispmap_img);
+	// shape = shapeFromDispMap(null, dispmap_img);
+
+
+	saveShapeDispMap(shape, "testdisp.jpg", TGT_RESOLUTION);
 }
 
 void draw() 
 {
 	background(0);
-	if(dispmap_img != null) translate(-dispmap_img.width/2, 0, -dispmap_img.height/2);
+	translate(-TGT_RESOLUTION/2., 0, -TGT_RESOLUTION/2.);
 	lights();
-	shape(test_shape, 0, 0);
+	shape(shape, 0, 0);
 }

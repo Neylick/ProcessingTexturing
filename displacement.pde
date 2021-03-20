@@ -11,7 +11,8 @@ PShape shapeFromDispMap(PImage i_texture, PImage i_dispmap)
 	//Loading the images' pixels
 	i_dispmap.loadPixels();
 
-	int SCALE = ceil(min(i_dispmap.width, i_dispmap.height)/(float)MAX_RESOLUTION);
+	//Scaling to get the target resolution as the shape witdh & height
+	int SCALE = ceil(min(i_dispmap.width, i_dispmap.height)/(float)TGT_RESOLUTION);
 
 	//Height computations
 	int h[][] = new int[ceil(i_dispmap.width/(float)SCALE)][ceil(i_dispmap.height/(float)SCALE)];
@@ -39,27 +40,27 @@ PShape shapeFromDispMap(PImage i_texture, PImage i_dispmap)
 			for(int y = 0; y < i_dispmap.height/(float)SCALE -1; ++y)
 			{
 				resShape.vertex(
-					SCALE*x, 
+					x, 
 					h[x][y], 
-					SCALE*y,
+					y,
 					SCALE*x,SCALE*y //Texture
 					);
 				resShape.vertex(
-					SCALE*(x+1), 
+					(x+1), 
 					h[x+1][y], 
-					SCALE*y,
+					y,
 					SCALE*(x+1),SCALE*y //Texture
 					); 
 				resShape.vertex(
-					SCALE*(x+1), 
+					(x+1), 
 					h[x+1][y+1], 
-					SCALE*(y+1),
+					(y+1),
 					SCALE*(x+1),SCALE*(y+1) //Texture
 					);
 				resShape.vertex(
-					SCALE*x, 
+					x, 
 					h[x][y+1], 
-					SCALE*(y+1),
+					(y+1),
 					SCALE*x,SCALE*(y+1) //Texture
 					); 
 			}
@@ -73,7 +74,7 @@ void saveShapeDispMap(PShape s, String filename, int s_size)
 {
 	colorMode(HSB);
 
-	PImage i_dispmap = createImage(s_size,s_size,HSB);
+	PImage i_dispmap = createImage(s_size, s_size, HSB);
 
 	i_dispmap.loadPixels();
 		for(int pos = 0; pos < s.getVertexCount(); ++pos)
