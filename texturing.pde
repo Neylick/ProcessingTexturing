@@ -6,7 +6,7 @@ PShape test_shape;
 PImage dispmap_img, texture_img, p;
 boolean istyping = false;
 
-final int MAX_RESOLUTION = 1024;
+final int MAX_RESOLUTION = 512;
 
 String res_type = "cobble"; 
 
@@ -23,12 +23,13 @@ void setup()
 	if(dispmap_img.width != dispmap_img.height) System.exit(1);
 
 	test_shape = shapeFromDispMap(texture_img, dispmap_img);
-	saveShapeDispMap(test_shape, "testdisp.jpg", dispmap_img.width);
+	// saveShapeDispMap(test_shape, "testdisp.jpg", dispmap_img.width);
 }
 
 void draw() 
 {
 	background(0);
 	if(dispmap_img != null) translate(-dispmap_img.width/2, 0, -dispmap_img.height/2);
+	lights();
 	shape(test_shape, 0, 0);
 }

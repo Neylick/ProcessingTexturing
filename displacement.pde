@@ -1,4 +1,4 @@
-PShape shapeFromDispMap(PImage i_text, PImage i_dispmap)
+PShape shapeFromDispMap(PImage i_texture, PImage i_dispmap)
 {
 	PShape resShape = createShape();
 
@@ -10,46 +10,58 @@ PShape shapeFromDispMap(PImage i_text, PImage i_dispmap)
 
 	//Loading the images' pixels
 	i_dispmap.loadPixels();
-	if(i_text != null) i_text.loadPixels();
 
+	int SCALE = ceil(min(i_dispmap.width, i_dispmap.height)/(float)MAX_RESOLUTION);
 
-	int detscale = ceil(min(i_dispmap.width, i_dispmap.height)/(float)MAX_RESOLUTION);
+	//Height computations
+	int h[][] = new int[ceil(i_dispmap.width/(float)SCALE)][ceil(i_dispmap.height/(float)SCALE)];
+	for(int x = 0; x < i_dispmap.width/(float)SCALE; ++x)
+		for(int y = 0; y < i_dispmap.height/(float)SCALE; ++y)
+			h[x][y] = (int) -brightness(i_dispmap.pixels[SCALE*floor(x+y*i_dispmap.width)]);
+
 
 	resShape.beginShape(QUADS);
-		resShape.textureMode(IMAGE);
-		for(int x = 0; x < i_dispmap.width/(float)detscale -1; ++x)
+		//Choosing texture
+		if(i_texture != null)
 		{
-			for(int y = 0; y < i_dispmap.height/(float)detscale -1; ++y)
+			resShape.noStroke();
+			resShape.texture(i_texture);
+		}
+		else
+		{
+			resShape.noFill();
+			resShape.stroke(255);
+		}
+
+		resShape.textureMode(IMAGE);
+		for(int x = 0; x < i_dispmap.width/(float)SCALE -1; ++x)
+		{
+			for(int y = 0; y < i_dispmap.height/(float)SCALE -1; ++y)
 			{
-				if(i_text != null) //A texture was given for the Shape
-				{
-					resShape.noStroke();
-					resShape.fill(i_text.pixels[detscale*floor(x+y*i_dispmap.width)]);
-				}	
-				else //No texture
-				{
-					resShape.noFill();
-					resShape.stroke(255);
-				}
-				resShape.vertex(detscale*x, -brightness(i_dispmap.pixels[detscale*floor(x+y*i_dispmap.width)]), detscale*y);
-					//  +----+
-					//  |    |
-					//  X----+
-
-				resShape.vertex(detscale*(x+1), -brightness(i_dispmap.pixels[detscale*floor((x+1)+y*i_dispmap.width)]), detscale*y); 
-					//  X----+
-					//  |    |
-					//  +----+
-
-				resShape.vertex(detscale*(x+1), -brightness(i_dispmap.pixels[detscale*floor((x+1)+(y+1)*i_dispmap.width)]), detscale*(y+1));
-					//  +----X
-					//  |    |
-					//  +----+
-
-				resShape.vertex(detscale*x, -brightness(i_dispmap.pixels[detscale*floor(x+(y+1)*i_dispmap.width)]), detscale*(y+1)); 
-					//  +----+
-					//  |    |
-					//  +----X
+				resShape.vertex(
+					SCALE*x, 
+					h[x][y], 
+					SCALE*y,
+					SCALE*x,SCALE*y //Texture
+					);
+				resShape.vertex(
+					SCALE*(x+1), 
+					h[x+1][y], 
+					SCALE*y,
+					SCALE*(x+1),SCALE*y //Texture
+					); 
+				resShape.vertex(
+					SCALE*(x+1), 
+					h[x+1][y+1], 
+					SCALE*(y+1),
+					SCALE*(x+1),SCALE*(y+1) //Texture
+					);
+				resShape.vertex(
+					SCALE*x, 
+					h[x][y+1], 
+					SCALE*(y+1),
+					SCALE*x,SCALE*(y+1) //Texture
+					); 
 			}
 		}
 	resShape.endShape();
