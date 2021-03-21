@@ -21,11 +21,11 @@ void setup()
 
 	if(dispmap_img.width != dispmap_img.height) System.exit(1);
 
-	shape = shapeFromDispMap(texture_img, dispmap_img);
-	// shape = shapeFromDispMap(null, dispmap_img);
+	// shape = shapeFromDispMap(texture_img, dispmap_img);
+	shape = shapeFromDispMap(null, dispmap_img);
 
 
-	saveShapeDispMap(shape, "testdisp.jpg", TGT_RESOLUTION);
+	// saveShapeDispMap(shape, "testdisp.jpg", TGT_RESOLUTION);
 }
 
 void draw() 

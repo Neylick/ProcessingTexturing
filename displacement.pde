@@ -20,25 +20,24 @@ PShape shapeFromDispMap(PImage i_texture, PImage i_dispmap)
 		for(int y = 0; y < i_dispmap.height/(float)SCALE; ++y)
 			h[x][y] = (int) -brightness(i_dispmap.pixels[SCALE*floor(x+y*i_dispmap.width)]);
 
+	resShape.colorMode(HSB);
 
 	resShape.beginShape(QUADS);
+		resShape.noStroke();
 		//Choosing texture
 		if(i_texture != null)
-		{
-			resShape.noStroke();
 			resShape.texture(i_texture);
-		}
-		else
-		{
-			resShape.noFill();
-			resShape.stroke(255);
-		}
 
 		resShape.textureMode(IMAGE);
 		for(int x = 0; x < i_dispmap.width/(float)SCALE -1; ++x)
 		{
 			for(int y = 0; y < i_dispmap.height/(float)SCALE -1; ++y)
 			{
+				if(i_texture == null) 
+				{
+					int c = (int) map(x+y,0,(i_dispmap.width+i_dispmap.height)/(float)SCALE-1, 0, 255);
+					resShape.fill(c,255,255);
+				}
 				resShape.vertex(
 					x, 
 					h[x][y], 
