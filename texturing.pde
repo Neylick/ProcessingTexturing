@@ -7,7 +7,7 @@ boolean istyping = false;
 final int TGT_RESOLUTION = 1024;
 final int SPHERE_SIZE = 1000;
 
-String res_type = "wall"; 
+String res_type = "brick"; 
 
 
 void setup() 

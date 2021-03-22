@@ -128,32 +128,32 @@ PShape sphereFromDispMap(PImage i_texture, PImage i_dispmap)
 					int c = (int) map(x+y,0,i_dispmap.width+i_dispmap.height-1, 0, 255);
 					resShape.fill(c,255,255);
 				}
-				//normal(); //later		
+				//normal(); //later
 				resShape.vertex(
-					(SPHERE_SIZE-h[x][y])*cos(PI*x/(float)i_dispmap.width)*sin(PI*y/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x][y])*sin(PI*x/(float)i_dispmap.width)*sin(PI*y/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x][y])*cos(PI*y/(float)i_dispmap.height),
+					(SPHERE_SIZE-h[x][y])*cos(TWO_PI*x/(float)(i_dispmap.width-1))*sin(PI*y/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x][y])*sin(TWO_PI*x/(float)(i_dispmap.width-1))*sin(PI*y/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x][y])*cos(PI*y/(float)(i_dispmap.height-1)),
 					x,y //Texture
 					);
 				//normal(); //later
 				resShape.vertex(
-					(SPHERE_SIZE-h[x+1][y])*cos(PI*(x+1)/(float)i_dispmap.width)*sin(PI*y/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x+1][y])*sin(PI*(x+1)/(float)i_dispmap.width)*sin(PI*y/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x+1][y])*cos(PI*y/(float)i_dispmap.height),
+					(SPHERE_SIZE-h[x+1][y])*cos(TWO_PI*(x+1)/(float)(i_dispmap.width-1))*sin(PI*y/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x+1][y])*sin(TWO_PI*(x+1)/(float)(i_dispmap.width-1))*sin(PI*y/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x+1][y])*cos(PI*y/(float)(i_dispmap.height-1)),
 					(x+1),y //Texture
 					);
 				//normal(); //later
 				resShape.vertex(
-					(SPHERE_SIZE-h[x+1][y+1])*cos(PI*(x+1)/(float)i_dispmap.width)*sin(PI*(y+1)/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x+1][y+1])*sin(PI*(x+1)/(float)i_dispmap.width)*sin(PI*(y+1)/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x+1][y+1])*cos(PI*(y+1)/(float)i_dispmap.height),
+					(SPHERE_SIZE-h[x+1][y+1])*cos(TWO_PI*(x+1)/(float)(i_dispmap.width-1))*sin(PI*(y+1)/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x+1][y+1])*sin(TWO_PI*(x+1)/(float)(i_dispmap.width-1))*sin(PI*(y+1)/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x+1][y+1])*cos(PI*(y+1)/(float)(i_dispmap.height-1)),
 					(x+1),(y+1) //Texture
 					);
 				//normal(); //later
 				resShape.vertex(					
-					(SPHERE_SIZE-h[x][y+1])*cos(PI*x/(float)i_dispmap.width)*sin(PI*(y+1)/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x][y+1])*sin(PI*x/(float)i_dispmap.width)*sin(PI*(y+1)/(float)i_dispmap.height), 
-					(SPHERE_SIZE-h[x][y+1])*cos(PI*(y+1)/(float)i_dispmap.height),
+					(SPHERE_SIZE-h[x][y+1])*cos(TWO_PI*x/(float)(i_dispmap.width-1))*sin(PI*(y+1)/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x][y+1])*sin(TWO_PI*x/(float)(i_dispmap.width-1))*sin(PI*(y+1)/(float)(i_dispmap.height-1)), 
+					(SPHERE_SIZE-h[x][y+1])*cos(PI*(y+1)/(float)(i_dispmap.height-1)),
 					x,(y+1) //Texture
 					); 
 			}
